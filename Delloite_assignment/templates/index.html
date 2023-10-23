@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deloitte Tax Questions</title>
+</head>
+<body>
+
+<form id="questionForm">
+    <label for="question">Enter your tax-related question:</label>
+    <input type="text" id="question" name="question" required>
+    <input type="submit" value="Ask">
+</form>
+
+<p id="response"></p>
+
+<script>
+    document.getElementById("questionForm").onsubmit = async function(e) {
+        e.preventDefault();
+        
+        let formData = new FormData(e.target);
+        
+        let response = await fetch("/ask", {
+            method: "POST",
+            body: formData
+        });
+
+        let data = await response.json();
+        document.getElementById("response").innerText = data.answer;
+    }
+</script>
+
+</body>
+</html>
